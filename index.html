@@ -1,0 +1,17 @@
+<a href="https://blink.global">Open App in ?</a>
+
+<script>
+  setTimeout(function() {
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    if (/android/i.test(userAgent)) {
+      // Android detected
+      window.location.href = "https://play.google.com/store/apps/details?id=global.blink.ga"; 
+    } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+      // iOS detected
+      window.location.href = "https://apps.apple.com/us/app/id6504238975"; 
+    } else {
+      window.location.href = "https://blink.global"; 
+    }
+  }, 1000); // 1 second delay
+</script>
