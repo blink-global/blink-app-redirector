@@ -1,0 +1,13 @@
+[
+{
+"relation": ["delegate_permission/common.handle_all_urls"],
+"target": {
+"namespace": "android_app",
+"package_name": "global.blink.ga",
+"sha256_cert_fingerprints":
+["6F:E0:35:B3:8B:98:FF:B6:FD:06:29:DF:EF:24:1B:66:EF:8C:57:de:17:61:F3:1B:2E:03:46:6D:80:06:F6:28",
+ "6A:3D:F9:2D:6C:70:67:5F:7D:9D:72:26:9F:D0:C5:10:34:53:77:ab:9C:AA:97:20:22:42:24:AD:AF:81:9D:9",
+  "AC:9D:78:60:EB:FC:B7:13:71:71:21:35:20:88:B1:19:29:C9:16:61:29:A1:D1:1A:72:36:5A:40:CC:99:ED:BC"]
+}
+}
+]
