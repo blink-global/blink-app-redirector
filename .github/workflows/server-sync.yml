@@ -22,7 +22,7 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ~/.ssh/deploy_key
         run: |
-          rsync -avz --delete \
+          sudo rsync -avz --delete \
             --exclude '.git*' \
             --exclude 'node_modules' \
             --exclude '.env*' \
