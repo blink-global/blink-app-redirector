@@ -1,16 +1,31 @@
-name: Deploy Deep Link Files
+name: Deploy to Production
+
 on:
-  workflow_dispatch:
+    workflow_dispatch:
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Deploy to server
-      run: |
-        echo "$SSH_PRIVATE_KEY" > key
-        chmod 600 key
-        rsync -av --delete -e "ssh -i key" ./ ${{ secrets.SERVER_USER }}:/var/www/
-        ssh -i key ${{ secrets.SERVER_USER }} "sudo chown -R www-data:www-data /var/www && sudo chmod -R 755 /var/www"
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - uses: actions/checkout@v4
+      
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          
+      - name: Deploy with rsync
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KEY: ~/.ssh/deploy_key
+        run: |
+          rsync -avz --delete \
+            --exclude '.git*' \
+            --exclude 'node_modules' \
+            --exclude '.env*' \
+            --exclude '.github' \
+            -e "ssh -i $SSH_KEY -o StrictHostKeyChecking=no" \
+            ./ $SSH_USER@$SSH_HOST:/var/www/
