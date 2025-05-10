@@ -5,14 +5,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Deploy to Domain 1
+    - uses: actions/checkout@v4
+    - name: Deploy to server
       run: |
-        rsync -av ./app.domain-1.com/ user@server1:/path/to/webroot/
+        echo "$SSH_PRIVATE_KEY" > key
+        chmod 600 key
+        rsync -av --delete -e "ssh -i key" ./ ${{ secrets.SERVER_USER }}:/var/www/
+        ssh -i key ${{ secrets.SERVER_USER }} "sudo chown -R www-data:www-data /var/www && sudo chmod -R 755 /var/www"
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_DOMAIN1 }}
-    - name: Deploy to Domain 2
-      run: |
-        rsync -av ./app.domain-2.com/ user@server2:/path/to/webroot/
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_DOMAIN2 }}
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
