@@ -1,0 +1,18 @@
+name: Deploy Deep Link Files
+on:
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Deploy to Domain 1
+      run: |
+        rsync -av ./app.domain-1.com/ user@server1:/path/to/webroot/
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_DOMAIN1 }}
+    - name: Deploy to Domain 2
+      run: |
+        rsync -av ./app.domain-2.com/ user@server2:/path/to/webroot/
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_DOMAIN2 }}
