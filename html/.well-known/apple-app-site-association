@@ -1,0 +1,25 @@
+{
+  "applinks": {
+      "apps": [],
+      "details": [
+          {
+              "appIDs": [
+                  "Q88554Q98K.com.sxswlondon.eventapp"
+              ],
+              "paths": [
+                  "*"
+              ],
+              "components": [
+                  {
+                      "/": "/*"
+                  }
+              ]
+          }
+      ]
+  },
+  "webcredentials": {
+      "apps": [
+          "Q88554Q98K.com.sxswlondon.eventapp"
+      ]
+  }
+}
